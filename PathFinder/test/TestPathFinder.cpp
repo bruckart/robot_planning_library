@@ -50,8 +50,6 @@ TEST(PathFinder, PathFinderInit)
         Waypoint wp = *iter;
         std::clog << "WP: " << wp.getX() << ", " << wp.getY() << std::endl;
     }
-
-
 }
 
 int main(int argc, char **argv)

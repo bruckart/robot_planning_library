@@ -22,8 +22,6 @@ int main(int argc, char* argv[])
     // Q_INIT_RESOURCE(helloscript);
     // Q_INIT_RESOURCE(application);
 
-    std::clog << "Hello World" << std::endl;
-
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
@@ -42,30 +40,17 @@ int main(int argc, char* argv[])
     //                           "top level widget"));
 
 #ifndef QT_NO_OPENGL
-    // MyOpenGLWidget w;
-    // w.setWindowTitle(QApplication::translate("qtOpenGl",
-    //                  "qtOpenGL"));
-    // w.show();
-
-
-
-#else
-    QLabel note("OpenGL Support required");
-    note.show();
-#endif
 
     MainWindow mainWindow;
     mainWindow.resize(800,600);
     mainWindow.show();
 
-    // MyGraphicsWidget gw;
-    // gw.resize(800,600);
-    // gw.show();
+#else
 
-    // MyGraphicsView view;
-    // view.resize(800,600);
-    // view.show();
-
+    QLabel note("OpenGL Support required");
+    note.show();
+    
+#endif
 
     return app.exec();
 }

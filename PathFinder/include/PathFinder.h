@@ -91,8 +91,33 @@ public:
 
     ~Obstacle() {}
 
+    int getX() const
+    {
+        return m_x;
+    }
+    int getY() const
+    {
+        return m_y;
+    }
+    int getRadius() const
+    {
+        return m_radius;
+    }
+
+    std::ostream& print(std::ostream& os) const
+    {
+        os << "Obstacle (" << m_x << ", " << m_y << ") "
+           << "r(" << m_radius << ")" << std::endl;
+        return os;
+    }
+
 private:
     unsigned int m_x;
     unsigned int m_y;
     unsigned int m_radius;
 };
+
+inline std::ostream& operator<<(std::ostream& os, Obstacle& o)
+{
+    return o.print(os);
+}

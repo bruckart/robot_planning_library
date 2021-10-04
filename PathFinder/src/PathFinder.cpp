@@ -41,11 +41,6 @@ void PathFinder::addObstacle(unsigned int x,
     m_obstacles.push_back(o);
 }
 
-void PathFinder::addObstacle(const Obstacle& obstacle)
-{
-    m_obstacles.push_back(obstacle);
-}
-
 PathFinder::Path PathFinder::generatePath()
 {
     // Check that the start location and the end location
@@ -58,11 +53,29 @@ PathFinder::Path PathFinder::generatePath()
     std::clog << "start point" << m_startLocation.first << ", " << m_startLocation.second << std::endl;
     std::clog << "end point" << m_endLocation.first << ", " << m_endLocation.second << std::endl;
 
-    // Create a grid encompassing these 2 points.
-    
+
+    // int grid[m_mapWidth][m_mapHeight] = {0};
+
+    // Set grid values of obstacles to 1.
+    // std::vector<Path>::const_iterator it = m_obstacles.begin();
+    // for (; it != m_obstacles.end(); ++it)
+    // {
+    //     Obstacle o = *it;
+    //     std::clog << "obstacle: " << o << std::endl;
+    // }
 
 
 
+    // // Create a grid of the map.
+    // for (unsigned int x = 0; x < m_mapWidth; ++x)
+    // {
+    //     for (unsigned int y = 0; y < m_mapHeight; ++y)
+    //     {
+
+    //     }
+
+    //     std::clog << std::endl;
+    // }
 
     return p;
 }
