@@ -1,8 +1,13 @@
 
 
 // #include "MainWindow.h"
-#include "MyOpenGLWidget.h"
+// #include "MyOpenGLWidget.h"
 // #include "MyWidget.h"
+
+#include "MyGraphicsWidget.h"
+// #include "MyGraphicsView.h"
+#include "MainWindow.h"
+
 
 #include <QApplication>
 #include <QSurfaceFormat>
@@ -37,18 +42,30 @@ int main(int argc, char* argv[])
     //                           "top level widget"));
 
 #ifndef QT_NO_OPENGL
-    MyOpenGLWidget w;
-    w.setWindowTitle(QApplication::translate("qtOpenGl",
-                     "qtOpenGL"));
-    w.show();
+    // MyOpenGLWidget w;
+    // w.setWindowTitle(QApplication::translate("qtOpenGl",
+    //                  "qtOpenGL"));
+    // w.show();
+
+
+
 #else
     QLabel note("OpenGL Support required");
     note.show();
 #endif
 
-    // MainWindow mainWindow;
-    // mainWindow.resize(800,600);
-    // mainWindow.show();
+    MainWindow mainWindow;
+    mainWindow.resize(800,600);
+    mainWindow.show();
+
+    // MyGraphicsWidget gw;
+    // gw.resize(800,600);
+    // gw.show();
+
+    // MyGraphicsView view;
+    // view.resize(800,600);
+    // view.show();
+
 
     return app.exec();
 }

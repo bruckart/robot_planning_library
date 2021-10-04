@@ -22,23 +22,25 @@ class Obstacle;
 class PathFinder
 {
 public:
+
     PathFinder(unsigned int mapWidth,
                unsigned int mapHeight,
                unsigned int robotRadius);
     ~PathFinder();
 
+    void setStartLocation(unsigned int x,
+                          unsigned int y);
+
+    void setEndLocation(unsigned int x,
+                        unsigned int y);
+
+
     void addObstacle(unsigned int x,
                      unsigned int y, 
                      unsigned int radius);
-    void addObstacle(const Obstacle& obstacle);
 
-
-
-    typedef std::vector<std::pair<unsigned int, unsigned int> > Path;
-    PathFinder::Path getPath();
-
-    void saveMap(const std::string filename);
-    void loadMap(const std::string filename);
+    typedef std::vector<Waypoint> Path;
+    PathFinder::Path generatePath();
 
 private:
     unsigned int m_mapWidth;
@@ -46,6 +48,9 @@ private:
 
     unsigned int m_robotRadius;
     
+    std::pair<unsigned int, unsigned int> m_startLocation;
+    std::pair<unsigned int, unsigned int> m_endLocation;
+
     std::vector<Obstacle> m_obstacles;
 
     std::vector<Waypoint> m_path;
@@ -63,6 +68,8 @@ public:
     ~Waypoint()
     {
     }
+    unsigned int getX() const { return m_x; }
+    unsigned int getY() const { return m_y; }
 
 private:
     unsigned int m_x;
@@ -88,7 +95,4 @@ private:
     unsigned int m_x;
     unsigned int m_y;
     unsigned int m_radius;
-
 };
-
-

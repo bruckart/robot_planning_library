@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>start.png</file>
+    <file>end.png</file>
+    <file>obs.png</file>
+</qresource>
+</RCC>
