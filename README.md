@@ -50,9 +50,7 @@ the unit test. The test output should contain the following:
 # Contributing
 Please feel free to contribute to this project. Future work consists of dynamic 
 selection and movement of cells, as well as statitical analysis of alternative routes.
-For questions or comments, feel free to reach out to me on GitHub or my email 
-
-
+For questions or comments, feel free to reach out to me on GitHub or my email at bruckart@gmail.com.
     1. Fork it ( https://github.com/bruckart/robot_planning_library.git)
     2. Create your feature branch (git checkout -b feature/fooBar)
     3. Commit your changes (git commit -am 'Add some fooBar')
@@ -63,5 +61,5 @@ For questions or comments, feel free to reach out to me on GitHub or my email
 
 * [Dijkstra's algorithm from Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) 
 * [Dijkstra's Algorithm from Progamiz](https://www.programiz.com/dsa/dijkstra-algorithm)
-* [Stack Overflow Question and Discussion] (https://stackoverflow.com/questions/53388098/find-the-shortest-path-between-two-points-with-obstacles)
+* [Stack Overflow Question and Discussion](https://stackoverflow.com/questions/53388098/find-the-shortest-path-between-two-points-with-obstacles)
 * [Abdul Bari's YouTube on Dijkstra's Algorithm including Relaxation](https://www.youtube.com/watch?v=XB4MIexjvY0)
