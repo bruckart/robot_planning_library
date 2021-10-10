@@ -4,52 +4,106 @@
 #include "PathFinder.h"
 #include "gtest/gtest.h"
 
-class TestPathFinder : public ::testing::Test
+
+// Create a simple one-directional graph for testing purposes.
+TEST(PathFinder, SimpleGraph)
 {
-public:
-    TestPathFinder()
-    {
-    }
-    ~TestPathFinder()
-    {
-    }
+    // A -> B -> C
+    Node* a = new Node('a');
+    a->m_distanceFromStart = 0;  // set start node
 
-    virtual void SetUp()
-    {
-        std::cout << "SetUp called." << std::endl;
-    }
+    Node* b = new Node('b');
+    Node* c = new Node('c');
+    
+    Edge* e1 = new Edge(a, b, 1);
+    Edge* e2 = new Edge(b, c, 1);
 
-    virtual void TearDown()
-    {
-        std::cout << "TearDown called." << std::endl;
-    }
-private:
+    PathFinder pf;
+    pf.addNode(a);
+    pf.addNode(b);
+    pf.addNode(c);
+    pf.addEdge(e1);
+    pf.addEdge(e2);
+
+    pf.computePath();
+    // pf.printShortestPathTo(c);
+
+    EXPECT_EQ(c->m_previous, b);
+    EXPECT_EQ(b->m_previous, a);
+}
 
 
-};
-
-
-TEST(PathFinder, PathFinderInit)
+// Create a graph which multiple edges with differing weights to test class logic.
+TEST(PathFinder, MultiGraph)
 {
-    // EXPECT_EQ(1, 1);
+    //***
+    // Nodes:
+    //
+    //        B ---- D
+    //      / |      |  \
+    //    A   |      |   F
+    //      \ |      |  /
+    //        C ---- E
+    //
+    // Edges/Weights:
+    // 
+    //            7
+    //    2   B ---- D   1
+    //      / |      |  \
+    //    A   | 1  2 |   F
+    //      \ |      |  /
+    //    4   C ---- E   5
+    //            3
+    //
+    // From Node F, the shortest path is to D(1), E(2), C(3), B(1), A(2).
+    //***
 
-    PathFinder pf(100, 100, 10);
-    pf.setStartLocation(0, 0);
-    pf.setEndLocation(100, 100);
+    Node* a = new Node('a');
+    a->m_distanceFromStart = 0;
+    Node* b = new Node('b');
+    Node* c = new Node('c');
+    Node* d = new Node('d');
+    Node* e = new Node('e');
+    Node* f = new Node('f');
 
-    pf.addObstacle(50, 50, 10);
+    Edge* e1 = new Edge(a, b, 2);
+    Edge* e2 = new Edge(a, c, 4);
+    Edge* e3 = new Edge(b, c, 1);
+    Edge* e4 = new Edge(b, d, 7);
+    Edge* e5 = new Edge(c, e, 3);
+    Edge* e6 = new Edge(d, e, 2);
+    Edge* e7 = new Edge(d, f, 1);
+    Edge* e8 = new Edge(e, f, 5);
 
-    // typedef std::vector<Waypoint> > Path;
+    PathFinder pf;
+    pf.addNode(a);
+    pf.addNode(b);
+    pf.addNode(c);
+    pf.addNode(d);
+    pf.addNode(e);
+    pf.addNode(f);
 
-    PathFinder::Path path = pf.generatePath();
+    pf.addEdge(e1);
+    pf.addEdge(e2);
+    pf.addEdge(e3);
+    pf.addEdge(e4);
+    pf.addEdge(e5);
+    pf.addEdge(e6);
+    pf.addEdge(e7);
+    pf.addEdge(e8);
 
-    std::clog << "number of waypoints returned= " << path.size() << std::endl;
-    std::vector<Waypoint>::const_iterator iter;
-    for (iter = path.begin(); iter != path.end(); ++iter)
-    {
-        Waypoint wp = *iter;
-        std::clog << "WP: " << wp.getX() << ", " << wp.getY() << std::endl;
-    }
+    
+    pf.computePath();
+    // f -> d -> e -> c -> b -> a 
+    // pf.printShortestPathTo(f);
+
+    EXPECT_EQ(f->m_previous, d);
+    EXPECT_EQ(d->m_previous, e);
+    EXPECT_EQ(e->m_previous, c);
+    EXPECT_EQ(c->m_previous, b);
+    EXPECT_EQ(b->m_previous, a);
+
+    EXPECT_EQ(f->m_distanceFromStart, 9);
 }
 
 int main(int argc, char **argv)

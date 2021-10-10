@@ -1,123 +1,107 @@
 
 
+#ifndef PATHFINDER_H
+#define PATHFINDER_H
 
 
 #include <iostream>
 #include <vector>
+#include <limits>
 
-// At the minimum the library should include the following abilities:
-// ● Take the initial parameters of map size(M x N) and robot radius.
-// ● Add obstacles to the current map using as a parameter a list of circular obstacles, with
-// each having a center location and radius.
-// ● Create the best safe path given a start and end location on the current map, taking into
-// consideration the robot radius.
-// ● Save the current map to a file.
-// ● Load a map from a file.
-  
-// ● Visualize a map and path to the screen.
 
-class Waypoint;
-class Obstacle;
+class Node;
+class Edge;
 
+//***
+// This class computes the shortest path utilizing Dijkstra's Algorithm. In order to 
+// use this class, the user needs to specify a graph through a series of nodes and 
+// edges. Once specified, the algorithm iterates through the nodes and computes the
+// distance value based upon the edges. Please see the unit test for more usage
+// examples.
+//
+// The method printShortestPathTo(Node* node) will print out the shortest path
+// to the specific node. All nodes contain a pointer to the previous node, which
+// can be traversed in order to determine the shortest path.
+//***
 class PathFinder
 {
 public:
 
-    PathFinder(unsigned int mapWidth,
-               unsigned int mapHeight,
-               unsigned int robotRadius);
+    PathFinder();
     ~PathFinder();
 
-    void setStartLocation(unsigned int x,
-                          unsigned int y);
+    // This method adds a node, in the graph.
+    void addNode(Node* node);
 
-    void setEndLocation(unsigned int x,
-                        unsigned int y);
+    // This method adds an edge which connects 2 nodes and speciies a distance.
+    void addEdge(Edge* edge);
 
+    // This method iterates through the graph and computes the shortest path. 
+    // Upon completion, it prints the shortest path.
+    void computePath();
 
-    void addObstacle(unsigned int x,
-                     unsigned int y, 
-                     unsigned int radius);
-
-    typedef std::vector<Waypoint> Path;
-    PathFinder::Path generatePath();
+    // This method 
+    void printShortestPathTo(Node* node);
 
 private:
-    unsigned int m_mapWidth;
-    unsigned int m_mapHeight;
 
-    unsigned int m_robotRadius;
-    
-    std::pair<unsigned int, unsigned int> m_startLocation;
-    std::pair<unsigned int, unsigned int> m_endLocation;
+    std::vector<Node*> m_nodes;
+    std::vector<Edge*> m_edges;
 
-    std::vector<Obstacle> m_obstacles;
 
-    std::vector<Waypoint> m_path;
+    // This method returns the smallest node in the graph. Note that for the first
+    // itertion, this is the "start node" which is specified with a distnace from
+    // start of 0.
+    Node* extractSmallestNode(std::vector<Node*>& nodes);
+
+    // This method returns the adjacent nodes to the specified node via
+    // the edges that are still in in the collection.
+    std::vector<Node*>* adjacentRemainingNodes(Node* node);
+
+    int distanceBetween(Node* node1, Node* node2);
+
+    bool contains(std::vector<Node*>& nodes, Node* node);
+
 };
 
-class Waypoint
+
+class Node
 {
 public:
-    Waypoint(unsigned int x, unsigned int y)
+    Node(char id)
     :
-        m_x(x),
-        m_y(y)
+        m_id(id),
+        m_previous(NULL),
+        m_distanceFromStart(std::numeric_limits<int>::max()) 
     {
     }
-    ~Waypoint()
-    {
-    }
-    unsigned int getX() const { return m_x; }
-    unsigned int getY() const { return m_y; }
 
-private:
-    unsigned int m_x;
-    unsigned int m_y;
+    char  m_id;
+    Node* m_previous;
+    int   m_distanceFromStart;
 };
 
-class Obstacle
+
+class Edge 
 {
 public:
-    Obstacle(unsigned int x, 
-             unsigned int y, 
-             unsigned int radius)
-    :
-        m_x(x),
-        m_y(y),
-        m_radius(radius)
+    Edge(Node* node1, Node* node2, int distance)
+    : 
+        m_node1(node1),
+        m_node2(node2),
+        m_distance(distance)
     {
     }
 
-    ~Obstacle() {}
-
-    int getX() const
+    bool connects(Node* node1, Node* node2)
     {
-        return m_x;
-    }
-    int getY() const
-    {
-        return m_y;
-    }
-    int getRadius() const
-    {
-        return m_radius;
+        return ((node1 == this->m_node1 && node2 == this->m_node2) ||
+                (node1 == this->m_node2 && node2 == this->m_node1));
     }
 
-    std::ostream& print(std::ostream& os) const
-    {
-        os << "Obstacle (" << m_x << ", " << m_y << ") "
-           << "r(" << m_radius << ")" << std::endl;
-        return os;
-    }
-
-private:
-    unsigned int m_x;
-    unsigned int m_y;
-    unsigned int m_radius;
+    Node* m_node1;
+    Node* m_node2;
+    int   m_distance;
 };
 
-inline std::ostream& operator<<(std::ostream& os, Obstacle& o)
-{
-    return o.print(os);
-}
+#endif // PATHFINDER_H
