@@ -51,6 +51,7 @@ the unit test. The test output should contain the following:
 Please feel free to contribute to this project. Future work consists of dynamic 
 selection and movement of cells, as well as statitical analysis of alternative routes.
 For questions or comments, feel free to reach out to me on GitHub or my email at bruckart@gmail.com.
+
     1. Fork it ( https://github.com/bruckart/robot_planning_library.git)
     2. Create your feature branch (git checkout -b feature/fooBar)
     3. Commit your changes (git commit -am 'Add some fooBar')
