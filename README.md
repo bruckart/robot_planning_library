@@ -14,22 +14,37 @@ library.
 
 # Dependencies
 The PathFinder library is written in C++ (17) and leverages Google Test for the 
-unit tests. It was built using CMake 3.20.4.
+unit tests. 
 
+The qtPathFinder executable was also written in C++ (17) and utilizes Qt5.
 
-The qtPathFinder executable was also written in C++ (17) that 
+Both applications were built using CMake 3.20.4.
+
 # Building:
 In order to build the PathFinder library, create a directory (.e.g. build) that
-is where you will execute CMake from. For example:
+is where you will execute CMake from. The process below can be used to build the
+PathFinder library.
 * `git clone https://github.com/bruckart/robot_planning_library.git`
 * `cd robot_planning_library`
+* `cd PathFinder`
 * `mkdir build`
 * `cd build`
 * `cmake ../`
 * `make`
 
+Subsequently, change directories to the qtPathFinder directory and repeat.
+
+* `cd qtPathFinder`
+* `mkdir build`
+* `cd build`
+* `cmake ../`
+* `make`
+
+Since the qtPathFinder executable utilizies the PathFinder library, do not forget 
+to update the CMakeLists.txt target_link_libraries to reference the newly created library.
+
 # Testing
-The PathFinder library contains 2 unit tests (SimpleGraph, MultiGraph) that can
+The PathFinder library contains 3 unit tests (SimpleGraph, MultiGraph, NegativeTest) that can
 be executed via specifying the CMake flag `-DCMAKE_TESTING_ENABLED` in order to build
 the unit test. The test output should contain the following:
 
@@ -48,12 +63,16 @@ the unit test. The test output should contain the following:
 [  PASSED  ] 2 tests.
 ```
 
-# Known Issues
+# Known Issues / Further Work
+* The qtPathFinder executable needs to be fully integrated to use the PathFinder library via the creation of Nodes and Edges that resemble the map scene.
+* The save/load feature should be refactored to it's indepdent class.
+* The creation of the BB-8 create start/end points need to be
+disabled if these items are in the scene.
+
 
 
 # Contributing
-Please feel free to contribute to this project. Future work consists of dynamic 
-selection and movement of cells, as well as statitical analysis of alternative routes.
+Please feel free to contribute to this project. 
 For questions or comments, feel free to reach out to me on GitHub or my email at bruckart@gmail.com.
 
     1. Fork it ( https://github.com/bruckart/robot_planning_library.git)
