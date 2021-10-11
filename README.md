@@ -16,6 +16,8 @@ library.
 The PathFinder library is written in C++ (17) and leverages Google Test for the 
 unit tests. It was built using CMake 3.20.4.
 
+
+The qtPathFinder executable was also written in C++ (17) that 
 # Building:
 In order to build the PathFinder library, create a directory (.e.g. build) that
 is where you will execute CMake from. For example:
@@ -45,6 +47,8 @@ the unit test. The test output should contain the following:
 [==========] 2 tests from 1 test suite ran. (0 ms total)
 [  PASSED  ] 2 tests.
 ```
+
+# Known Issues
 
 
 # Contributing

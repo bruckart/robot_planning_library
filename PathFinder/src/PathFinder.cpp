@@ -12,6 +12,19 @@ PathFinder::PathFinder()
 
 PathFinder::~PathFinder()
 {
+    // Delete the vector of nodes.
+    for (auto n : m_nodes)
+    {
+        delete n;
+    }
+    m_nodes.clear();
+
+    // Delete the vector of edges.
+    for (auto e : m_edges)
+    {
+        delete e;
+    }
+    m_edges.clear();
 }
 
 void PathFinder::addNode(Node* node)
@@ -138,7 +151,7 @@ void PathFinder::printShortestPathTo(Node* destination)
     std::clog << "Distance from start: " << destination->m_distanceFromStart << std::endl;
     while (previous)
     {
-        std::clog << previous->m_id << " "; 
+        std::clog << previous->m_name << " "; 
         previous = previous->m_previous;
     }
     std::clog << std::endl;

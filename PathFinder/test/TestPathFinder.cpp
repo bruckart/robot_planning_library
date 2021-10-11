@@ -9,11 +9,11 @@
 TEST(PathFinder, SimpleGraph)
 {
     // A -> B -> C
-    Node* a = new Node('a');
+    Node* a = new Node("a");
     a->m_distanceFromStart = 0;  // set start node
 
-    Node* b = new Node('b');
-    Node* c = new Node('c');
+    Node* b = new Node("b");
+    Node* c = new Node("c");
     
     Edge* e1 = new Edge(a, b, 1);
     Edge* e2 = new Edge(b, c, 1);
@@ -58,13 +58,13 @@ TEST(PathFinder, MultiGraph)
     // From Node F, the shortest path is to D(1), E(2), C(3), B(1), A(2).
     //***
 
-    Node* a = new Node('a');
+    Node* a = new Node("a");
     a->m_distanceFromStart = 0;
-    Node* b = new Node('b');
-    Node* c = new Node('c');
-    Node* d = new Node('d');
-    Node* e = new Node('e');
-    Node* f = new Node('f');
+    Node* b = new Node("b");
+    Node* c = new Node("c");
+    Node* d = new Node("d");
+    Node* e = new Node("e");
+    Node* f = new Node("f");
 
     Edge* e1 = new Edge(a, b, 2);
     Edge* e2 = new Edge(a, c, 4);
@@ -104,6 +104,23 @@ TEST(PathFinder, MultiGraph)
     EXPECT_EQ(b->m_previous, a);
 
     EXPECT_EQ(f->m_distanceFromStart, 9);
+}
+
+TEST(PathFinder, NegativeTest)
+{
+    PathFinder pf;
+
+    Node* a = new Node("a");
+    a->m_distanceFromStart = 0;
+    Node* b = new Node("b");
+
+    // Do not create any edges between these nodes.
+
+    pf.computePath();
+    // f -> d -> e -> c -> b -> a 
+    // pf.printShortestPathTo(b);
+
+    EXPECT_TRUE(b->m_previous == NULL);
 }
 
 int main(int argc, char **argv)

@@ -1,7 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file>start.png</file>
-    <file>end.png</file>
-    <file>obs.png</file>
+    <file>deathstar.png</file>
+    <file>bb8.jpg</file>
+    <file>earth.png</file>
+    <file>splashscreen.jpg</file>
 </qresource>
 </RCC>

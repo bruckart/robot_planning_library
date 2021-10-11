@@ -68,17 +68,17 @@ private:
 class Node
 {
 public:
-    Node(char id)
+    Node(std::string name)
     :
-        m_id(id),
+        m_name(name),
         m_previous(NULL),
         m_distanceFromStart(std::numeric_limits<int>::max()) 
     {
     }
 
-    char  m_id;
-    Node* m_previous;
-    int   m_distanceFromStart;
+    std::string  m_name;
+    Node*        m_previous;
+    int          m_distanceFromStart;
 };
 
 

@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.20.04)
 project(qtPathFinder VERSION 1.0.0 LANGUAGES CXX)
 
 # set(CMAKE_CXX_STANDARD 11)
-# set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
@@ -47,18 +47,20 @@ set(_UI
 
 set(_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/include/MainWindow.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/MyGraphicsWidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/ObstacleItem.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/StartLocationItem.h
-    ${CMAKE_CURRENT_LIST_DIR}/include/EndLocationItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/MyGraphicsView.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/MyGraphicsScene.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/DeathStarItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/DroidStartItem.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/DroidEndItem.h
 )
 
 set(_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/MainWindow.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/MyGraphicsWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ObstacleItem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/StartLocationItem.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/EndLocationItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/MyGraphicsView.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/MyGraphicsScene.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/DeathStarItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/DroidStartItem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/DroidEndItem.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp)
 
 qt5_wrap_cpp(qtHelloWorld_header_moc ${_HEADERS})
@@ -90,5 +92,6 @@ target_link_libraries(qtPathFinder
     Qt5::Core
     # Qt5::Gui
     # Qt5::Widgets)
+    # Update this to reference the PathFinder library.
     /Users/robert/git/bruckart/shield.ai/PathFinder/_build/libPathFinder.dylib
 )

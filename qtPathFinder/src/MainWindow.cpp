@@ -5,11 +5,9 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-// #include "ObstacleItem.h"
-
 #include <QSettings>
 #include <QMessageBox>
-#include <QRandomGenerator>
+// #include <QRandomGenerator>
 #include <QFileDialog>
 
 
@@ -28,37 +26,28 @@ MainWindow::MainWindow(QWidget* parent)
     // createToolbars();
     createStatusBar();
 
-    ui->m_addStartLocButton->setIcon(QPixmap(":/start.png"));
-    ui->m_addStartLocButton->setToolTip(QString("Add Start Location Identifier"));
+    ui->m_addBb8Start->setIcon(QPixmap(":/bb8.jpg"));
+    ui->m_addBb8Start->setToolTip(QString("Add BB-8 Start Location"));
 
-    // ui->m_remStartLocButton->setIcon(QPixmap(":/rando.png"));
-    // ui->m_addStartLocButton->setToolTip(QString("Remove Start Location Identifier"));
+    ui->m_addBb8End->setIcon(QPixmap(":/earth.png"));
+    ui->m_addBb8End->setToolTip(QString("Add BB-8 End Location"));
 
-    ui->m_addEndLocButton->setIcon(QPixmap(":/end.png"));
-    ui->m_addEndLocButton->setToolTip(QString("Add End Location Identifier"));
+    ui->m_addDeathStarButton->setIcon(QPixmap(":/deathstar.png"));
+    ui->m_addDeathStarButton->setToolTip(QString("Add Death Star"));
 
-    // ui->m_remEndLocButton->setIcon(QPixmap(":/rando.png"));
-    // ui->m_remEndLocButton->setToolTip(QString("Remove End Location Identifier"));
-
-    ui->m_addObsButton->setIcon(QPixmap(":/obs.png"));
-    ui->m_addObsButton->setToolTip(QString("Add Obstacle"));
-
-    // ui->m_remObsButton->setIcon(QPixmap(":/rando.png"));
-    // ui->m_remObsButton->setToolTip(QString("Remove Obstacle"));
-
-    connect(ui->m_ownshipRadius, SIGNAL(valueChanged(double)),
-            ui->m_graphicsWidget, SLOT(updateOwnshipRadius(double)));
+    // connect(ui->m_ownshipRadius, SIGNAL(valueChanged(double)),
+    //         ui->m_graphicsWidget, SLOT(updateOwnshipRadius(double)));
 
 
-    connect(ui->m_addStartLocButton, SIGNAL(clicked()),
+    connect(ui->m_addBb8Start, SIGNAL(clicked()),
             this, SLOT(addStartLocation()));
 
-    connect(ui->m_addEndLocButton, SIGNAL(clicked()),
+    connect(ui->m_addBb8End, SIGNAL(clicked()),
             this, SLOT(addEndLocation()));
     
     // Obstacles
-    connect(ui->m_addObsButton, SIGNAL(clicked()),
-            this, SLOT(addObstacle()));
+    connect(ui->m_addDeathStarButton, SIGNAL(clicked()),
+            this, SLOT(addDeathStar()));
 
 
     // When the reset button is selected, return all the
@@ -72,21 +61,11 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Update the scene if the map size is changed.
     connect(ui->m_mapWidth, SIGNAL(valueChanged(int)),
-            ui->m_graphicsWidget, SLOT(updateSceneWidth(int)));
+            ui->m_graphicsView, SLOT(updateSceneWidth(int)));
 
     connect(ui->m_mapHeight, SIGNAL(valueChanged(int)),
-            ui->m_graphicsWidget, SLOT(updateSceneHeight(int)));
+            ui->m_graphicsView, SLOT(updateSceneHeight(int)));
 
-
-
-    // If the map bounds is changed, it's possible that
-    // the start and end locations and obstacles could be out of bounds.
-
-    // Set the initial scene size.
-    ui->m_graphicsWidget->updateSceneSize(ui->m_mapWidth->value(),
-                                          ui->m_mapHeight->value());
-
-    // qApp->setStyleSheet("QGroupBox {  border: 1px solid gray;}");
 
     setWindowTitle(tr("qtPathFinder"));
 
@@ -106,8 +85,6 @@ void MainWindow::about()
 
 void MainWindow::createActions()
 {
-    std::clog << "MainWindow::createActions()" << std::endl;
-
     m_loadAction = new QAction(tr("&Load"), this);
     m_loadAction->setShortcut(tr("Ctrl-L"));
     m_loadAction->setStatusTip(tr("Load the PathFinder scene."));
@@ -125,6 +102,12 @@ void MainWindow::createActions()
     m_exitAction->setStatusTip(tr("Exit the application"));
     connect(m_exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
+    m_orderAction = new QAction(tr("&Execute Order 66"), this);
+    m_orderAction->setStatusTip(tr("Execute Order 66"));
+    m_orderAction->setEnabled(false);
+    // connect(m_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+
     m_aboutAction = new QAction(tr("&About"), this);
     m_aboutAction->setStatusTip(tr("Show the application's About dialog"));
     connect(m_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -136,8 +119,6 @@ void MainWindow::createActions()
 }
 void MainWindow::createMenus()
 {
-    std::clog << "MainWindow::createMenus()" << std::endl;
-
     m_fileMenu = menuBar()->addMenu(tr("&File"));
 
     m_fileMenu->addAction(m_loadAction);
@@ -151,6 +132,7 @@ void MainWindow::createMenus()
     m_helpMenu = menuBar()->addMenu(tr("&Help"));
     m_helpMenu->addAction(m_aboutAction);
     m_helpMenu->addAction(m_aboutQtAction);
+    m_helpMenu->addAction(m_orderAction);
 }
 
 void MainWindow::createToolbars()
@@ -193,106 +175,38 @@ void MainWindow::readSettings()
 
 void MainWindow::addStartLocation()
 {
-    std::clog << "MainWindow::generateRandomStartLoc()" << std::endl;
+    statusBar()->showMessage(QString("Adding BB-8 Start Location at (0,0)"), 3000);
+    ui->m_graphicsView->addStartLocation(0, 0, ui->m_ownshipRadius->value());
 
-    // int mapWidthMax = ui->m_mapWidth->value();
-    // int mapHeightMax = ui->m_mapHeight->value();
-    // int mapWidthMin = ui->m_mapWidth->minimum();
-    // int mapHeightMin = ui->m_mapHeight->minimum();
-
-    // int randomX = (int) QRandomGenerator::global()->bounded(mapWidthMin, mapWidthMax);
-    // int randomY = (int) QRandomGenerator::global()->bounded(mapHeightMin, mapHeightMax);
-
-    // ui->m_startLocX->setValue(randomX);
-    // ui->m_startLocY->setValue(randomY);
-    // ui->m_graphicsWidget->addStartLocation(randomX, randomY, ui->m_ownshipRadius->value());
-
-    statusBar()->showMessage(QString("Adding Start location at (0,0)"), 3000);
-    ui->m_graphicsWidget->addStartLocation(0, 0, ui->m_ownshipRadius->value());
-
-    // Disable the Add button.
-    // ui->m_addStartLocButton->setEnabled(false);
-    // ui->m_remStartLocButton->setEnabled(true);
-}
-
-void MainWindow::removeStartLocation()
-{
-    std::clog << "MainWindow::removeStartLocation()" << std::endl;
-
-    ui->m_graphicsWidget->removeStartLocation();
-    // ui->m_addStartLocButton->setEnabled(true);
-    // ui->m_remStartLocButton->setEnabled(true);
 }
 
 void MainWindow::addEndLocation()
 {
-    std::clog << "MainWindow::addEndLocation()" << std::endl;
-
-    // int mapWidthMax = ui->m_mapWidth->value();
-    // int mapHeightMax = ui->m_mapHeight->value();
-    // int mapWidthMin = ui->m_mapWidth->minimum();
-    // int mapHeightMin = ui->m_mapHeight->minimum();
-
-    // int randomX = (int) QRandomGenerator::global()->bounded(mapWidthMin, mapWidthMax);
-    // int randomY = (int) QRandomGenerator::global()->bounded(mapHeightMin, mapHeightMax);
-
-    // ui->m_endLocX->setValue(randomX);
-    // ui->m_endLocY->setValue(randomY);
-    // ui->m_graphicsWidget->addEndLocation(randomX, randomY, ui->m_ownshipRadius->value());
-    
-    // if the radius of the ownship end position does not match
-    // the start position, then return
-
-
-
-    statusBar()->showMessage(QString("Adding End location at (0,0)"), 3000);
-    ui->m_graphicsWidget->addEndLocation(0, 0, ui->m_ownshipRadius->value());
-
-    // ui->m_addEndLocButton->setEnabled(false);
-    // ui->m_remEndLocButton->setEnabled(true);
+    statusBar()->showMessage(QString("Adding BB-8 End location at (0,0)"), 3000);
+    ui->m_graphicsView->addEndLocation(0, 0, ui->m_ownshipRadius->value());
 }
 
-void MainWindow::removeEndLocation()
+void MainWindow::addDeathStar()
 {
-    std::clog << "MainWindow::removeEndLocation()" << std::endl;
+    statusBar()->showMessage(QString("Adding a Death Star at (0,0)"), 3000);
 
-    // ui->m_graphicsWidget->remEndLocation(randomX, randomY, ui->m_ownshipRadius->value());
-    ui->m_graphicsWidget->removeEndLocation();
-    // ui->m_addEndLocButton->setEnabled(true);
-    // ui->m_remEndLocButton->setEnabled(false);
-}
-
-void MainWindow::addObstacle()
-{
-    std::clog << "MainWindow::addObstacle()" << std::endl;
-    statusBar()->showMessage(QString("Adding Obstacle at (0,0)"), 3000);
-
-    ui->m_graphicsWidget->addObstacle(0, 0, ui->m_obstacleRadius->value());
-}
-
-void MainWindow::removeObstacle()
-{
-    std::clog << "MainWindow::removeObstacle()" << std::endl;
-
+    ui->m_graphicsView->addDeathStar(0, 0, ui->m_deathstarRadius->value());  
 }
 
 void MainWindow::generate()
 {
     statusBar()->showMessage(QString("Generating Path"), 3000);
-    ui->m_graphicsWidget->generate();
-
+    ui->m_graphicsView->generatePath();
 }
 
 void MainWindow::clear()
 {
     statusBar()->showMessage(QString("Clearing Scene"), 3000);
-    ui->m_graphicsWidget->clear();
+    ui->m_graphicsView->clear();
 }
 
 void MainWindow::loadFile()
 {
-    std::clog << "MainWindow::loadFile()" << std::endl;
-
     QString fn = QFileDialog::getOpenFileName(
         this,
         tr("Specify PathFinder File"), 
@@ -304,13 +218,11 @@ void MainWindow::loadFile()
     statusBar()->showMessage(QString("Loading file: " + fn), 3000);
 
 
-    ui->m_graphicsWidget->loadFile(fn);
+    ui->m_graphicsView->loadFile(fn);
 }
 
 void MainWindow::saveFile()
 {
-    std::clog << "MainWindow::saveFile()" << std::endl;
-
     QString fn = QFileDialog::getOpenFileName(
         this,
         tr("Specify PathFinder File"), 
@@ -319,11 +231,8 @@ void MainWindow::saveFile()
 
     statusBar()->showMessage(QString("Saving file: " + fn), 3000);
 
-
-
     std::clog << "fileName=" << fn.toStdString() << std::endl;
 
-
-    ui->m_graphicsWidget->saveFile(fn);
+    ui->m_graphicsView->saveFile(fn);
 }
 

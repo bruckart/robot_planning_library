@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
          <widget class="QGroupBox" name="groupBox">
@@ -48,7 +48,7 @@
                   <number>1000</number>
                  </property>
                  <property name="value">
-                  <number>800</number>
+                  <number>400</number>
                  </property>
                 </widget>
                </item>
@@ -61,7 +61,7 @@
                   <number>1000</number>
                  </property>
                  <property name="value">
-                  <number>600</number>
+                  <number>300</number>
                  </property>
                 </widget>
                </item>
@@ -118,16 +118,16 @@
                    <double>999.000000000000000</double>
                   </property>
                   <property name="value">
-                   <double>25.000000000000000</double>
+                   <double>20.000000000000000</double>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_8">
                   <item>
-                   <widget class="QPushButton" name="m_addStartLocButton">
+                   <widget class="QPushButton" name="m_addBb8Start">
                     <property name="text">
-                     <string>Add Start Location</string>
+                     <string>Add BB-8 Start Point</string>
                     </property>
                    </widget>
                   </item>
@@ -136,12 +136,12 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_7">
                   <item>
-                   <widget class="QPushButton" name="m_addEndLocButton">
+                   <widget class="QPushButton" name="m_addBb8End">
                     <property name="statusTip">
                      <string extracomment="This is a comment."/>
                     </property>
                     <property name="text">
-                     <string>Add End Location</string>
+                     <string>Add BB-8 End Point</string>
                     </property>
                    </widget>
                   </item>
@@ -168,7 +168,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="m_obstacleRadius">
+                 <widget class="QDoubleSpinBox" name="m_deathstarRadius">
                   <property name="minimum">
                    <double>1.000000000000000</double>
                   </property>
@@ -176,14 +176,14 @@
                    <double>999.000000000000000</double>
                   </property>
                   <property name="value">
-                   <double>25.000000000000000</double>
+                   <double>35.000000000000000</double>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="m_addObsButton">
+                 <widget class="QPushButton" name="m_addDeathStarButton">
                   <property name="text">
-                   <string>Add Obstacle</string>
+                   <string>Add Death Star</string>
                   </property>
                  </widget>
                 </item>
@@ -252,7 +252,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="MyGraphicsWidget" name="m_graphicsWidget" native="true"/>
+      <widget class="MyGraphicsView" name="m_graphicsView" native="true"/>
      </widget>
     </item>
    </layout>
@@ -283,9 +283,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>MyGraphicsWidget</class>
+   <class>MyGraphicsView</class>
    <extends>QWidget</extends>
-   <header>MyGraphicsWidget.h</header>
+   <header>MyGraphicsView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

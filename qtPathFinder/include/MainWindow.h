@@ -5,10 +5,6 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
-// #include <QWidget>
-// #include <QGraphicsScene>
-
-// class QGraphicsScene;
 
 namespace Ui
 {
@@ -16,7 +12,6 @@ namespace Ui
 }
 
 
-// This is the main window with 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -33,13 +28,8 @@ private slots:
     void about();
 
     void addStartLocation();
-    void removeStartLocation();
-
     void addEndLocation();
-    void removeEndLocation();
-
-    void addObstacle();
-    void removeObstacle();
+    void addDeathStar();
 
     void generate();
     void clear();
@@ -68,6 +58,7 @@ private:
     QAction* m_exitAction;
     QAction* m_aboutAction;
     QAction* m_aboutQtAction;
+    QAction* m_orderAction;
 
     Ui::MainWindow* ui;
 };
